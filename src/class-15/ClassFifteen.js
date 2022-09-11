@@ -1,35 +1,71 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import ClassFifteenOne from './ClassFifteenOne.js';
 class ClassFifteen extends Component {
-  state = {
-    number: 0,
-    className: "btn btn-primary"
-  }
-  style = { color: "red" }
 
-  increment = () => {
-    const newNumber = this.state.number + 1
-    const newState = { number: newNumber, className: "btn btn-primary" }
-    this.setState(newState)
+  state = {
+    boxes: [1, 2, 3, 4, 5]
   }
-  decrement = () => {
-    const number = this.state.number
-    if (number === 0) {
-      const updateClassName = "btn btn-secondary"
-      const newState = { number: this.state.number, className: updateClassName }
-      this.setState(newState)
-    } else {
-      const newNumber = this.state.number - 1
-      const newState = { number: newNumber }
-      this.setState(newState)
-    }
+
+  getSingleBox = () => {
+    return (
+      <div>
+        <ClassFifteenOne />
+        <br />
+      </div>
+    )
   }
+
+  getBoxes = () => {
+    // const b = this.state.boxes
+    const { boxes } = this.state
+    // const updateArr = boxes.map(this.getSingleBox)
+    // return updateArr;
+    // map returns a array
+    return boxes.map(() => (
+      <div>
+        <ClassFifteenOne />
+        <br />
+      </div>
+    ))
+    // const updateArr = boxes.map(() => {
+    //   return (
+    //     <div>
+    //       <ClassFifteenOne />
+    //       <br />
+    //     </div>
+    //   )
+    // })
+    // return updateArr
+
+  }
+
+  createBox = () => {
+    const { boxes } = this.state
+    this.setState({ boxes: [...boxes, 0] })
+    console.log(boxes);
+  }
+
+
+
   render() {
     return (
       <div>
-        <button class={this.state.className} onClick={this.decrement} style={this.style}>-</button>
-        <span className='mx-5'>{this.state.number}</span>
-        <button class="btn btn-success" onClick={this.increment}>+</button>
+        <br />
+        <button className="btn btn-primary" onClick={this.createBox} style={this.style}>Add New Box</button>
+        <br /><br />
+        {
+          // this.getBoxes()
+          this.state.boxes.map((num, index) => (
+            <div key={num}>
+              <ClassFifteenOne value={num} id={index} />
+              {/* 
+                const obj = new ClassFifteenOne({value:10})
+              */}
+              <br />
+            </div>
+          ))
+        }
       </div>
     );
   }
